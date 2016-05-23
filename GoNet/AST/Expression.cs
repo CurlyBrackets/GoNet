@@ -8,6 +8,8 @@ namespace GoNet.AST
 {
     abstract class Expression : Node
     {
+        public Type ResolvedType { get; set; }
+
         protected Expression(bool container, int index = 0)
             : base(container, index) { }
     }

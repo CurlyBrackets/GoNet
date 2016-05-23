@@ -35,20 +35,18 @@ namespace GoNet
             switch (input)
             {
                 case VarDeclaration vd:
-                    if (CurrentScope.Vars.ContainsKey(vd.Identifier))
-                        throw new Exception($"Duplicate definition of {vd.Identifier}");
-
-                    CurrentScope.Vars.Add(vd.Identifier, new LocalVariable(CurrentScope.LocalIndex++, false));
+                    
+                    DefineVariable<LocalVariable>(vd.Identifier, false, null).Value = vd.Value;
                     base.Process(input);
                     break;
                 case Signature s:
                     foreach (var p in s.Parameters.FilteredChildren<Parameter>())
-                        DefineVariable<ParameterVariable>(p.Name, p.Type is PointerType);
+                        DefineVariable<ParameterVariable>(p.Name, p.Type is PointerType, p.Type);
                     foreach (var r in s.Returns.FilteredChildren<Parameter>()) {
                         string id = r.Name;
                         if (string.IsNullOrEmpty(r.Name))
                             id = $"_r{CurrentScope.ReturnIndex}";
-                        DefineVariable<ReturnVariable>(id, false);
+                        DefineVariable<ReturnVariable>(id, false, r.Type);
                     }
 
                     base.Process(input);
@@ -97,7 +95,7 @@ namespace GoNet
             m_scopes.RemoveAt(m_scopes.Count - 1);
         }
 
-        private void DefineVariable<T>(string id, bool reference) where T : Variable
+        private T DefineVariable<T>(string id, bool reference, AST.Type rawType) where T : Variable
         {
             int index = 0;
             if (typeof(T) == typeof(LocalVariable))
@@ -106,7 +104,11 @@ namespace GoNet
                 index = CurrentScope.ParameterIndex++;
             else if (typeof(T) == typeof(ReturnVariable))
                 index = CurrentScope.ReturnIndex++;
-            CurrentScope.Vars.Add(id, (T)Activator.CreateInstance(typeof(T), new object[] { index, reference }));
+
+            T inst = (T)Activator.CreateInstance(typeof(T), new object[] { index, reference });
+            inst.ResolvedType = rawType;
+            CurrentScope.Vars.Add(id, inst);
+            return inst;
         }
     }
 }

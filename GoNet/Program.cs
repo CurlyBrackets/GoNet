@@ -137,11 +137,11 @@ namespace GoNet
             }
 
             var resolver = new AstResolver();
+            var typeChecker = new TypeChecker();
 
             // constant subsitution
             resolver.Process(root);
-            // type assignment
-            // type check
+            typeChecker.Process(root);
 
             // compile ast to il/lib
 

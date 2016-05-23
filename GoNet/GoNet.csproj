@@ -59,6 +59,7 @@
     <Compile Include="AST\Base.cs" />
     <Compile Include="AST\BinaryExpression.cs" />
     <Compile Include="AST\Block.cs" />
+    <Compile Include="AST\BuiltinType.cs" />
     <Compile Include="AST\ConstDeclaration.cs" />
     <Compile Include="AST\Expression.cs" />
     <Compile Include="AST\ExpressionList.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="AST\Variable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeChecker.cs" />
     <Compile Include="Utils\BigRationalExtensions.cs" />
     <Compile Include="Utils\LookupList.cs" />
   </ItemGroup>
