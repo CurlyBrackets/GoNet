@@ -8,8 +8,8 @@ namespace GoNet.AST
 {
     abstract class Statement : Node
     {
-        protected Statement()
-            : base(true)
+        protected Statement(int limit = 0)
+            : base(true, limit)
         {
 
         }

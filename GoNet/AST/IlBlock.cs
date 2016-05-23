@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ReturnStatement : Statement
+    class IlBlock : Node
     {
-        public ReturnStatement()
+        public IlBlock()
+            : base(true)
         {
 
         }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class TypeName : Type
+    class ReturnVariable : Variable
     {
-        public string Name { get; private set; }
-        public TypeName(string name)
-            : base(false)
+        public int Slot { get; private set; }
+
+        public ReturnVariable(int slot, bool ignore)
         {
-            Name = name;
+            Slot = slot;
         }
     }
 }

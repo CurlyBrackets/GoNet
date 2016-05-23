@@ -10,6 +10,7 @@ namespace GoNet.AST
     {
         public Type BaseType { get; private set; }
         public RangeType(Type t)
+            : base(true, 1)
         {
             BaseType = t;
         }

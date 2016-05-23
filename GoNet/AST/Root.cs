@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class Root : Base
+    class Root : Node
     {
-        public Dictionary<string, Package> Packages { get; private set; }
+        public Dictionary<string, int> m_packages;
+
         public Root()
+            : base(true)
         {
-            Packages = new Dictionary<string, Package>();
+            m_packages = new Dictionary<string, int>();
+        }
+
+        public Package GetPackage(string name)
+        {
+            if (m_packages.ContainsKey(name))
+                return GetChild<Package>(m_packages[name]);
+
+            var package = new Package(name);
+            AddChild(package);
+            m_packages.Add(name, NumChildren() - 1);
+            return package;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace GoNet.AST
     {
         public string Value { get; private set; }
         public StringLiteral(string value)
+            : base(false)
         {
             Value = value;
         }

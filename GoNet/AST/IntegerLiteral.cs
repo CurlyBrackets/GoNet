@@ -11,6 +11,7 @@ namespace GoNet.AST
     {
         public BigInteger Value { get; private set; }
         public IntegerLiteral(BigInteger value)
+            : base(false)
         {
             Value = value;
         }

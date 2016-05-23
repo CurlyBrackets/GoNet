@@ -137,12 +137,15 @@ namespace GoNet
             }
 
             var resolver = new AstResolver();
+
+            // constant subsitution
             resolver.Process(root);
-            
+            // type assignment
+            // type check
 
             // compile ast to il/lib
 
-            Console.WriteLine(root.Packages.First().Value.Imports.Count);
+            //Console.WriteLine(root.Packages.First().Value.Imports.Count);
 
             return false;
         }

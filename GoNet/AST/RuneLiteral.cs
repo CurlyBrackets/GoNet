@@ -10,6 +10,7 @@ namespace GoNet.AST
     {
         public int Value { get; private set; }
         public RuneLiteral(int value)
+            : base(false)
         {
             Value = value;
         }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ReturnStatement : Statement
+    abstract class Variable : Node
     {
-        public ReturnStatement()
+        public Variable()
+            : base(false)
         {
 
         }

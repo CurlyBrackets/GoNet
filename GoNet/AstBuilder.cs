@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using GoNet.AST;
-using Parser;
 using System.Numerics;
 using Numerics;
+using GoNet.Parser;
 
 namespace GoNet
 {
@@ -33,14 +33,7 @@ namespace GoNet
         public override Base VisitPackage_clause([NotNull] GolangParser.Package_clauseContext context)
         {
             var identifier = context.package_name().Identifier().Accept(this) as RawNode;
-            Package ret = null;
-            if (m_root.Packages.ContainsKey(identifier.Text))
-                ret = m_root.Packages[identifier.Text];
-            else
-            {
-                ret = new Package(identifier.Text);
-                m_root.Packages.Add(ret.Name, ret);
-            }
+            Package ret = m_root.GetPackage(identifier.Text);
 
             m_currentPackage = ret;
             m_currentScope = ret;
@@ -61,8 +54,7 @@ namespace GoNet
                 ret = new ImportDeclaration(first.Text.Trim('"'), string.Empty);
             }
 
-            if(!m_currentPackage.Imports.ContainsKey(ret.Name))
-                m_currentPackage.Imports.Add(ret.Name, ret);
+            m_currentPackage.AddImport(ret);
             return ret;
         }
 
@@ -106,7 +98,7 @@ namespace GoNet
                 m_currentScope = temp;
             }
 
-            m_currentPackage.Functions.Add(ret.Name, ret);
+            m_currentPackage.AddFunctionDeclaration(ret);
             return ret;
         }
 
@@ -122,7 +114,7 @@ namespace GoNet
                 {
                     case AST.Type t:
                         ret.Returns = new Parameters();
-                        ret.Returns.Items.Add(new Parameter(string.Empty, t));
+                        ret.Returns.AddChild(new Parameter(string.Empty, t));
                         break;
                     case Parameters p:
                         ret.Returns = p;
@@ -152,8 +144,8 @@ namespace GoNet
                     switch (decl)
                     {
                         case Parameters ps:
-                            foreach (var p in ps.FilteredChildren<Parameter>())
-                                ret.AddChild(p);
+                            while (ps.NumChildren() > 0)
+                                ret.AddChild(ps.GetChild<Parameter>(0));
                             break;
                         case Parameter p:
                             ret.AddChild(p);
@@ -231,7 +223,11 @@ namespace GoNet
             var ret = new ReturnStatement();
 
             if (context.expression_list() != null)
-                ret.Expression = context.expression_list().Accept(this) as ExpressionList;
+            {
+                var el = context.expression_list().Accept(this) as ExpressionList;
+                foreach (var e in el.Items)
+                    ret.AddChild(e);
+            }
 
             return ret;
         }

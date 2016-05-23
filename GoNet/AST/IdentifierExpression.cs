@@ -10,6 +10,7 @@ namespace GoNet.AST
     {
         public string Identifier { get; private set; }
         public IdentifierExpression(string id)
+            : base(false)
         {
             Identifier = id;
         }

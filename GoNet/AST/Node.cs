@@ -73,9 +73,13 @@ namespace GoNet.AST
             if (!m_indexDependent)
                 m_indexDependent = true;
 
-            if (n.Parent != null)
-                n.Parent.RemoveChild(n);
-            n.Parent = this;
+            if (n != null)
+            {
+                if (n.Parent != null)
+                    n.Parent.RemoveChild(n);
+                n.Parent = this;
+            }
+
             while (index >= m_children.Count)
                 m_children.Add(null);
 

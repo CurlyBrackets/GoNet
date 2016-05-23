@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ImportDeclaration : Base
+    class ImportDeclaration : Node
     {
         public string Package { get; private set; }
         public string Alias { get; private set; }
@@ -25,6 +25,7 @@ namespace GoNet.AST
         }
 
         public ImportDeclaration(string package, string alias)
+            : base(false)
         {
             Package = package;
             Alias = alias;
