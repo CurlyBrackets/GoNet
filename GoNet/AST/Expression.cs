@@ -8,9 +8,19 @@ namespace GoNet.AST
 {
     abstract class Expression : Node
     {
-        public Type ResolvedType { get; set; }
+        public Type ResolvedType
+        {
+            get
+            {
+                return GetChild<Type>(0);
+            }
+            set
+            {
+                SetChild(value, 0);
+            }
+        }
 
         protected Expression(bool container, int index = 0)
-            : base(container, index) { }
+            : base(true, index+1) { }
     }
 }

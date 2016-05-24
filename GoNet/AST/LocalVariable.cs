@@ -14,11 +14,11 @@ namespace GoNet.AST
         {
             get
             {
-                return GetChild<Expression>(0);
+                return GetChild<Expression>(1);
             }
             set
             {
-                SetChild(value, 0);
+                SetChild(value, 1);
             }
         }
 

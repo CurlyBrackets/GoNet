@@ -29,11 +29,11 @@ namespace GoNet.AST
             }
         }
 
-        public Block Body
+        public Node Body
         {
             get
             {
-                return GetChild<Block>(1);
+                return GetChild<Node>(1);
             }
             set
             {

@@ -106,7 +106,7 @@ namespace GoNet
                 index = CurrentScope.ReturnIndex++;
 
             T inst = (T)Activator.CreateInstance(typeof(T), new object[] { index, reference });
-            inst.ResolvedType = rawType;
+            inst.ResolvedType = rawType.Clone();
             CurrentScope.Vars.Add(id, inst);
             return inst;
         }

@@ -14,5 +14,10 @@ namespace GoNet.AST
         {
             Name = name;
         }
+
+        public override Type Clone()
+        {
+            return new TypeName(Name);
+        }
     }
 }

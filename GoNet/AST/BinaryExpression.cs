@@ -13,11 +13,11 @@ namespace GoNet.AST
         {
             get
             {
-                return GetChild<Expression>(0);
+                return GetChild<Expression>(1);
             }
             private set
             {
-                SetChild(value, 0);
+                SetChild(value, 1);
             }
         }
 
@@ -25,11 +25,11 @@ namespace GoNet.AST
         {
             get
             {
-                return GetChild<Expression>(1);
+                return GetChild<Expression>(2);
             }
             private set
             {
-                SetChild(value, 1);
+                SetChild(value, 2);
             }
         }
 

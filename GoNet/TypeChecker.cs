@@ -16,9 +16,14 @@ namespace GoNet
                     var t = BuiltinType.FromTypeName(tn.Name);
                     if(t != null)
                     {
-                        
+                        tn.Parent.Replace(tn, t);
                         break;
                     }
+                    // resolve from type decls
+                    // resolve from imports
+                    break;
+                case IntegerLiteral il:
+                    il.ResolvedType = BuiltinType.FromTypeName("int");
                     break;
                 default:
                     base.Process(input);

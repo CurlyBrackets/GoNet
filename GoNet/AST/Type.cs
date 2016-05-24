@@ -13,5 +13,7 @@ namespace GoNet.AST
         {
 
         }
+
+        public abstract Type Clone();
     }
 }

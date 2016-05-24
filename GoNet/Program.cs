@@ -138,15 +138,17 @@ namespace GoNet
 
             var resolver = new AstResolver();
             var typeChecker = new TypeChecker();
+            var translator = new Translator();
+            var compiler = new Compiler(name, true);
 
             // constant subsitution
             resolver.Process(root);
             typeChecker.Process(root);
-
-            // compile ast to il/lib
+            translator.Process(root);
+            compiler.Process(root);
 
             //Console.WriteLine(root.Packages.First().Value.Imports.Count);
-
+            compiler.Finalize();
             return false;
         }
 

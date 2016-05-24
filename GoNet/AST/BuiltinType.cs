@@ -54,5 +54,10 @@ namespace GoNet.AST
                 return Parts[name];
             return null;
         }
+
+        public override Type Clone()
+        {
+            return new BuiltinType(Type);
+        }
     }
 }
