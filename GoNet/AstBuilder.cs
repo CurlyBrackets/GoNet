@@ -232,6 +232,18 @@ namespace GoNet
             return ret;
         }
 
+        public override Base VisitUnary_expr([NotNull] GolangParser.Unary_exprContext context)
+        {
+            if(context.unary_op() != null)
+            {
+                return new UnaryExpression(
+                    (context.unary_op().Accept(this) as UnaryOpWrapper).Op,
+                    context.unary_expr().Accept(this) as Expression);                
+            }
+            else
+                return base.VisitUnary_expr(context);
+        }
+
         public override Base VisitExpression_list([NotNull] GolangParser.Expression_listContext context)
         {
             var ret = new ExpressionList();
@@ -268,6 +280,37 @@ namespace GoNet
                     context.expression(0).Accept(this) as Expression,
                     context.expression(1).Accept(this) as Expression);
             }
+        }
+
+        public override Base VisitUnary_op([NotNull] GolangParser.Unary_opContext context)
+        {
+            EUnaryOp op = EUnaryOp.Unknown;
+            switch (context.GetText())
+            {
+                case "-":
+                    op = EUnaryOp.Negative;
+                    break;
+                case "+":
+                    op = EUnaryOp.Positive;
+                    break;
+                case "!":
+                    op = EUnaryOp.Not;
+                    break;
+                case "^":
+                    op = EUnaryOp.Xor;
+                    break;
+                case "*":
+                    op = EUnaryOp.Dereference;
+                    break;
+                case "&":
+                    op = EUnaryOp.Reference;
+                    break;
+                case "<-":
+                    op = EUnaryOp.Send;
+                    break;
+            }
+
+            return new UnaryOpWrapper(op);
         }
 
         public override Base VisitBinary_op([NotNull] GolangParser.Binary_opContext context)

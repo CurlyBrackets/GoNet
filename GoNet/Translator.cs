@@ -316,6 +316,32 @@ namespace GoNet
                             break;
                     }
                     break;
+                case UnaryExpression ue:
+                    Process(ue.Expr);
+
+                    switch (ue.Op)
+                    {
+                        case EUnaryOp.Unknown:
+                            break;
+                        case EUnaryOp.Positive:
+                            break;
+                        case EUnaryOp.Negative:
+                            m_inst.AddChild(new Instruction(EInstruction.Neg));
+                            break;
+                        case EUnaryOp.Not:
+                            break;
+                        case EUnaryOp.Xor:
+                            break;
+                        case EUnaryOp.Dereference:
+                            break;
+                        case EUnaryOp.Reference:
+                            break;
+                        case EUnaryOp.Send:
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
                 case ParameterVariable pv:
                     if (pv.Reference)
                         throw new NotImplementedException();

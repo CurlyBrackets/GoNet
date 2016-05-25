@@ -94,6 +94,8 @@
     <Compile Include="AST\Type.cs" />
     <Compile Include="AST\TypeDeclaration.cs" />
     <Compile Include="AST\TypeName.cs" />
+    <Compile Include="AST\UnaryExpression.cs" />
+    <Compile Include="AST\UnaryOpWrapper.cs" />
     <Compile Include="AST\VarDeclaration.cs" />
     <Compile Include="AST\VarDeclarationList.cs" />
     <Compile Include="AstProcessor.cs" />
