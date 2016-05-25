@@ -39,7 +39,10 @@ namespace GoNet.AST
         protected Node(bool container, int limit)
         {
             m_container = container;
-            m_children = new List<Node>(limit);
+            m_children = new List<Node>(new Node[limit]);
+            if (limit != 0)
+                m_indexDependent = true;
+
             m_limit = limit;
         }
 
