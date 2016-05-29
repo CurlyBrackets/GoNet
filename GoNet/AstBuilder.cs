@@ -276,7 +276,87 @@ namespace GoNet
 
         public override Base VisitComposite_literal([NotNull] GolangParser.Composite_literalContext context)
         {
-            return base.VisitComposite_literal(context);
+            var type = context.literal_type().Accept(this) as AST.Type;
+            var els = context.literal_value().Accept(this) as KeyedElementList;
+
+            if(type is IndeterminateArrayType)
+            {
+                type = new ArrayType(
+                    (type as IndeterminateArrayType).ElementType,
+                    els.NumChildren());
+            }
+
+            return new CompositeLiteral(
+                type,
+                els);
+        }
+
+        public override Base VisitLiteral_value([NotNull] GolangParser.Literal_valueContext context)
+        {
+            return context.element_list().Accept(this);
+        }
+
+        public override Base VisitLiteral_type([NotNull] GolangParser.Literal_typeContext context)
+        {
+            if(context.EllipsesOperator() != null)
+            {
+                return new IndeterminateArrayType(
+                    context.type().Accept(this) as AST.Type);
+            }
+
+            return base.VisitLiteral_type(context);
+        }
+
+        public override Base VisitArray_type([NotNull] GolangParser.Array_typeContext context)
+        {
+            int length = 0;
+            var lengthExpr = context.expression().Accept(this) as Expression;
+
+            switch (lengthExpr)
+            {
+                case IntegerLiteral il:
+                    length = (int)il.Value;
+                    break;
+                default:
+                    throw new InvalidOperationException("Array size must be constant");
+            }
+
+            return new ArrayType(
+                context.type().Accept(this) as AST.Type,
+                length);
+        }
+
+        public override Base VisitElement_list([NotNull] GolangParser.Element_listContext context)
+        {
+            var list = new KeyedElementList();
+
+            for (int i = 0; context.keyed_element(i) != null; i++)
+                list.AddChild(
+                    context.keyed_element(i).Accept(this) as KeyedElement);
+
+            return list;
+        }
+
+        public override Base VisitKeyed_element([NotNull] GolangParser.Keyed_elementContext context)
+        {
+            Expression key = null;
+            if (context.key() != null)
+            {
+                if (context.key().field_name() != null)
+                {
+                    var node = context.key().field_name().Accept(this) as RawNode;
+                    key = new IdentifierExpression(node.Text);
+                }
+                else if(context.key().expression() != null)
+                {
+                    key = context.key().expression().Accept(this) as Expression;
+                }
+            }
+
+            var element = context.element().Accept(this) as Expression;
+            return new KeyedElement(
+                key,
+                element);
         }
 
         public override Base VisitUnary_expr([NotNull] GolangParser.Unary_exprContext context)
@@ -657,11 +737,15 @@ namespace GoNet
                 m_currentScope.AddVarDeclaration(vd);
                 if(exprList != null)
                 {
-                    sl.AddChild(
-                        new Assignment(
+                    var assign = new Assignment(
                             new IdentifierExpression(identList.Items[i].Text),
                             exprList.GetChild<Expression>(0),
-                            AssignmentType.Normal));
+                            AssignmentType.Normal);
+
+                    if (m_currentScope == m_currentPackage)
+                        m_currentPackage.AddStaticInitializer(assign);
+                    else
+                        sl.AddChild(assign);
                 }
             }
             return sl;

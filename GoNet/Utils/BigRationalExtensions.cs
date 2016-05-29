@@ -29,6 +29,8 @@ namespace GoNet.Utils
                 denominator = BigInteger.Pow(10, baseString.Length - decimalIndex - 1);
                 baseString = baseString.Remove(decimalIndex, 1);
             }
+            else
+                denominator = 1;
 
             var numerator = BigInteger.Parse(baseString);
 

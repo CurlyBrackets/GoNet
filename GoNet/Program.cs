@@ -106,9 +106,9 @@ namespace GoNet
             var root = new AST.Root();
             var builder = new AstBuilder(root);
 
-            int count = 18;
+            int count = 20;
 
-            foreach(var file in Directory.EnumerateFiles(dir, "gamma.go"))
+            foreach(var file in Directory.EnumerateFiles(dir, "*.go"))
             {
                 // parse each file
                 var basename = Path.GetFileNameWithoutExtension(file);

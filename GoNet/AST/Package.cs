@@ -10,7 +10,7 @@ namespace GoNet.AST
     {
         public string Name { get; private set; }
 
-        private List<int> m_functions, m_imports;
+        private List<int> m_functions, m_imports, m_staticInitializers;
 
         public Package(string name)
             : base(0)
@@ -18,6 +18,7 @@ namespace GoNet.AST
             Name = name;
             m_functions = new List<int>();
             m_imports = new List<int>();
+            m_staticInitializers = new List<int>();
         }
 
         public void AddFunctionDeclaration(Function f)
@@ -50,6 +51,22 @@ namespace GoNet.AST
         public int NumImports()
         {
             return m_imports.Count;
+        }
+
+        public void AddStaticInitializer(Assignment a)
+        {
+            AddChild(a);
+            m_staticInitializers.Add(NumChildren() - 1);
+        }
+
+        public Assignment GetStaticInitialzier(int i)
+        {
+            return GetChild<Assignment>(m_staticInitializers[i]);
+        }
+
+        public int NumStaticInitializers()
+        {
+            return m_staticInitializers.Count;
         }
     }
 }

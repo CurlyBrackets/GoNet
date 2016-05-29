@@ -222,6 +222,31 @@ namespace GoNet
                     PrintIndent();
                     m_o.WriteLine("Default");
                     break;
+                case ArrayType at:
+                    PrintIndent();
+                    m_o.WriteLine("ArrayType:");
+                    IncreaseIndent();
+                    PrintIndent();
+                    m_o.WriteLine($"Length {at.Length}");
+                    NestedField("Element type", at.ElementType);
+                    DecreaseIndent();
+                    break;
+                case CompositeLiteral cl:
+                    PrintIndent();
+                    m_o.WriteLine("Composite literal:");
+                    IncreaseIndent();
+                    NestedField("Type", cl.Type);
+                    NestedField("Elements", cl.Elements);
+                    DecreaseIndent();
+                    break;
+                case KeyedElement ke:
+                    PrintIndent();
+                    m_o.WriteLine("Keyed Element:");
+                    IncreaseIndent();
+                    NestedField("Key", ke.Key);
+                    NestedField("Value", ke.Element);
+                    DecreaseIndent();
+                    break;
                 default:
                     base.Process(input);
                     break;

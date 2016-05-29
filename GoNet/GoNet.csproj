@@ -57,6 +57,7 @@
     <Compile Include="AstBuilder.cs" />
     <Compile Include="AstPrinter.cs" />
     <Compile Include="AstResolver.cs" />
+    <Compile Include="AST\ArrayType.cs" />
     <Compile Include="AST\Assignment.cs" />
     <Compile Include="AST\Base.cs" />
     <Compile Include="AST\BinaryExpression.cs" />
@@ -80,10 +81,12 @@
     <Compile Include="AST\IlBlock.cs" />
     <Compile Include="AST\ImaginaryLiteral.cs" />
     <Compile Include="AST\ImportDeclaration.cs" />
+    <Compile Include="AST\IndeterminateArrayType.cs" />
     <Compile Include="AST\IndexExpression.cs" />
     <Compile Include="AST\IntegerLiteral.cs" />
     <Compile Include="AST\InvocationExpression.cs" />
     <Compile Include="AST\KeyedElement.cs" />
+    <Compile Include="AST\KeyedElementList.cs" />
     <Compile Include="AST\LabeledStatement.cs" />
     <Compile Include="AST\LocalVariable.cs" />
     <Compile Include="AST\Node.cs" />
