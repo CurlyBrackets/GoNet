@@ -270,8 +270,33 @@ namespace GoNet
                     primaryExpr,
                     context.index().Accept(this) as Expression);
             }
+            else if(context.selector() != null)
+            {
+                return new SelectorExpression(
+                    primaryExpr,
+                    context.selector().Identifier().GetText());
+            }
 
             return base.VisitPrimary_expr(context);
+        }
+
+        public override Base VisitQualified_identifier([NotNull] GolangParser.Qualified_identifierContext context)
+        {
+            return new QualifiedIdentifier(
+                context.Identifier(0).GetText(),
+                context.Identifier(1).GetText());
+        }
+
+        public override Base VisitConversion([NotNull] GolangParser.ConversionContext context)
+        {
+            return new ConversionExpression(
+                context.type().Accept(this) as AST.Type,
+                context.expression().Accept(this) as Expression);
+        }
+
+        public override Base VisitIndex([NotNull] GolangParser.IndexContext context)
+        {
+            return context.expression().Accept(this);
         }
 
         public override Base VisitComposite_literal([NotNull] GolangParser.Composite_literalContext context)
@@ -583,12 +608,93 @@ namespace GoNet
                     ret.AddChild(
                         new Assignment(
                             new IdentifierExpression(vd.Identifier),
-                            exprList.GetChild<Expression>(i),
+                            exprList.GetChild<Expression>(0),
                             AssignmentType.Normal));
                 }
             }
 
             return ret;
+        }
+
+        public override Base VisitFor_statement([NotNull] GolangParser.For_statementContext context)
+        {
+            var ret = new ForStatement();
+            var temp = m_currentScope;
+            m_currentScope = ret;
+
+            if (context.expression() != null)
+                ret.Clause = new ConditionClause(
+                    context.expression().Accept(this) as Expression);
+            else if (context.for_clause() != null)
+                ret.Clause = context.for_clause().Accept(this) as IterativeClause;
+            else if (context.range_clause() != null)
+                ret.Clause = context.range_clause().Accept(this) as RangeClause;
+
+            ret.Body = context.block().Accept(this) as Block;
+
+            m_currentScope = temp;
+            return ret;
+        }
+
+        public override Base VisitFor_clause([NotNull] GolangParser.For_clauseContext context)
+        {
+            StatementList preamble = null;
+            var rawPreamble = context.simple_statement(0) != null ? context.simple_statement(0).Accept(this) : null;
+            switch (rawPreamble)
+            {
+                case Statement s:
+                    preamble = new StatementList();
+                    preamble.AddChild(s);
+                    break;
+                case StatementList sl:
+                    preamble = sl;
+                    break;
+                default:
+                    break;
+            }
+
+            return new IterativeClause(
+                preamble,
+                context.expression() != null ? context.expression().Accept(this) as Expression : null,
+                context.simple_statement(1) != null ? context.simple_statement(1).Accept(this) as Statement : null);
+        }
+
+        public override Base VisitIncdec_statement([NotNull] GolangParser.Incdec_statementContext context)
+        {
+            return new IncDecStatement(
+                context.expression().Accept(this) as Expression,
+                context.IncOperator() != null);
+        }
+
+        public override Base VisitRange_clause([NotNull] GolangParser.Range_clauseContext context)
+        {
+            var expr = context.expression().Accept(this) as Expression;
+
+            ExpressionList values = null;
+            if(context.identifier_list() != null)
+            {
+                values = new ExpressionList();
+                var idents = context.identifier_list().Accept(this) as RawNodeList;
+                int index = 0;
+                foreach(var ident in idents.Items)
+                {
+                    var vd = new VarDeclaration(
+                        ident.Text,
+                        new IteratorType(
+                            new ExpressionType(expr),
+                            index++));
+                    m_currentScope.AddVarDeclaration(vd);
+                    values.AddChild(new IdentifierExpression(vd.Identifier));
+                }
+            }
+            else if(context.expression_list() != null)
+            {
+                values = context.expression_list().Accept(this) as ExpressionList;
+            }
+
+            return new RangeClause(
+                values,
+                expr);
         }
 
         public override Base VisitOperand_name([NotNull] GolangParser.Operand_nameContext context)
@@ -654,11 +760,22 @@ namespace GoNet
 
         public override Base VisitExpr_case_clause([NotNull] GolangParser.Expr_case_clauseContext context)
         {
-            var @case = context.expr_switch_case().Accept(this) as Node;
-            var sl = context.statement_list().Accept(this) as StatementList;
+            var ret = new ExpressionSwitchClause();
 
-            return new ExpressionSwitchClause(
-                @case, sl);
+            var temp = m_currentScope;
+            m_currentScope = ret;
+
+            ret.Condition = context.expr_switch_case().Accept(this) as Node;
+            ret.Statements = context.statement_list().Accept(this) as StatementList;
+
+            m_currentScope = temp;
+
+            return ret;
+        }
+
+        public override Base VisitFallthrough_statement([NotNull] GolangParser.Fallthrough_statementContext context)
+        {
+            return new FallthroughStatement();
         }
 
         public override Base VisitArguments([NotNull] GolangParser.ArgumentsContext context)
@@ -798,6 +915,8 @@ namespace GoNet
 
             return ret;
         }
+
+        
 
         private BinaryExpression FixPrecedence(BinaryExpression active)
         {

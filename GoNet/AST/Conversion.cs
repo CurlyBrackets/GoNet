@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class IndexExpression : Expression
+    class ConversionExpression : Expression
     {
-        public Expression Target
+        public Type To
         {
-            get { return GetChild<Expression>(0); }
+            get { return GetChild<Type>(0); }
             private set { SetChild(value, 0); }
         }
 
-        public Expression Index
+        public Expression From
         {
             get { return GetChild<Expression>(1); }
             private set { SetChild(value, 1); }
         }
 
-        public IndexExpression(Expression target, Expression index)
+        public ConversionExpression(Type toType, Expression from)
             : base(true, 2)
         {
-            Target = target;
-            Index = index;
+            To = toType;
+            From = from;
         }
 
         public override Expression Clone()
         {
-            return new IndexExpression(
-                Target.Clone(),
-                Index.Clone());
+            return new ConversionExpression(
+                To.Clone(),
+                From.Clone());
         }
     }
 }

@@ -106,7 +106,7 @@ namespace GoNet
             var root = new AST.Root();
             var builder = new AstBuilder(root);
 
-            int count = 20;
+            int count = 42;
 
             foreach(var file in Directory.EnumerateFiles(dir, "*.go"))
             {
@@ -177,7 +177,7 @@ namespace GoNet
         static void Main(string[] args)
         {
             //StandAloneTest("(padding[0:m])");
-            //StandAloneTest("return sign >= 0 && f > MaxFloat64 || sign <= 0 && f < -MaxFloat64");
+            //StandAloneTest("return *(*uint32)(unsafe.Pointer(&f))");
 
             BuildLibrary("math");
         }

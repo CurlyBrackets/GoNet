@@ -177,6 +177,7 @@ namespace GoNet
                     PrintIndent();
                     m_o.WriteLine("Expression switch clause");
                     IncreaseIndent();
+                    DoScope(esc);
                     NestedField("Condition", esc.Condition);
                     NestedField("Statements", esc.Statements);
                     DecreaseIndent();
@@ -245,6 +246,103 @@ namespace GoNet
                     IncreaseIndent();
                     NestedField("Key", ke.Key);
                     NestedField("Value", ke.Element);
+                    DecreaseIndent();
+                    break;
+                case IndexExpression ie:
+                    PrintIndent();
+                    m_o.WriteLine("Index expression:");
+                    IncreaseIndent();
+                    NestedField("Target", ie.Target);
+                    NestedField("Index", ie.Index);
+                    DecreaseIndent();
+                    break;
+                case ForStatement fs:
+                    PrintIndent();
+                    m_o.WriteLine("For statement:");
+                    IncreaseIndent();
+                    DoScope(fs);
+                    NestedField("Clause", fs.Clause);
+                    NestedField("Body", fs.Body);
+                    DecreaseIndent();
+                    break;
+                case ConditionClause cc:
+                    PrintIndent();
+                    m_o.WriteLine("Condition clause:");
+                    IncreaseIndent();
+                    NestedField("Expression", cc.Expression);
+                    DecreaseIndent();
+                    break;
+                case IterativeClause ic:
+                    PrintIndent();
+                    m_o.WriteLine("Iterative clause:");
+                    IncreaseIndent();
+                    NestedField("Preamble", ic.Preamble);
+                    NestedField("Condition", ic.Condition);
+                    NestedField("Afterword", ic.Afterword);
+                    DecreaseIndent();
+                    break;
+                case RangeClause rc:
+                    PrintIndent();
+                    m_o.WriteLine("Range clause:");
+                    IncreaseIndent();
+                    NestedField("Values", rc.Values);
+                    NestedField("Iterator", rc.Iterator);
+                    DecreaseIndent();
+                    break;
+                case IteratorType it:
+                    PrintIndent();
+                    m_o.WriteLine("Iterator type:");
+                    IncreaseIndent();
+                    NestedField("Base type", it.BaseType);
+                    PrintIndent();
+                    m_o.WriteLine($"Index: {it.Index}");
+                    DecreaseIndent();
+                    break;
+                case IncDecStatement ids:
+                    PrintIndent();
+                    m_o.WriteLine("IncDec Statement:");
+                    IncreaseIndent();
+                    NestedField("Expression", ids.Expression);
+                    PrintIndent();
+                    m_o.WriteLine($"Is increment: {ids.Increment}");
+                    DecreaseIndent();
+                    break;
+                case FallthroughStatement fs:
+                    PrintIndent();
+                    m_o.WriteLine("Fallthrough Statement:");
+                    break;
+                case QualifiedIdentifier qi:
+                    PrintIndent();
+                    m_o.WriteLine($"[Qualified ident {qi.Scope}::{qi.Identifier}]");
+                    break;
+                case ConversionExpression ce:
+                    PrintIndent();
+                    m_o.WriteLine("Conversion expression:");
+                    IncreaseIndent();
+                    NestedField("To", ce.To);
+                    NestedField("From", ce.From);
+                    DecreaseIndent();
+                    break;
+                case SelectorExpression se:
+                    PrintIndent();
+                    m_o.WriteLine("Selector expression:");
+                    IncreaseIndent();
+                    NestedField("Left", se.Left);
+                    PrintIndent();
+                    m_o.WriteLine($"Right: {se.Right}");
+                    DecreaseIndent();
+                    break;
+                case ImportDeclaration id:
+                    PrintIndent();
+                    m_o.WriteLine("Import declaration");
+                    IncreaseIndent();
+                    PrintIndent();
+                    m_o.WriteLine($"Package: {id.Package}");
+                    if (!string.IsNullOrEmpty(id.Alias))
+                    {
+                        PrintIndent();
+                        m_o.WriteLine($"Alias: {id.Alias}");
+                    }
                     DecreaseIndent();
                     break;
                 default:

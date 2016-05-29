@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ExpressionSwitchClause : Node
+    class ExpressionSwitchClause : Scope
     {
         public Node Condition
         {
@@ -14,7 +14,7 @@ namespace GoNet.AST
             {
                 return GetChild(0);
             }
-            private set
+            set
             {
                 SetChild(value, 0);
             }
@@ -26,17 +26,16 @@ namespace GoNet.AST
             {
                 return GetChild<StatementList>(1);
             }
-            private set
+            set
             {
                 SetChild(value, 1);
             }
         }
 
-        public ExpressionSwitchClause(Node condition, StatementList sl)
-            : base(true, 2)
+        public ExpressionSwitchClause()
+            : base(2)
         {
-            Condition = condition;
-            Statements = sl;
+
         }
     }
 }

@@ -64,7 +64,9 @@
     <Compile Include="AST\Block.cs" />
     <Compile Include="AST\BuiltinType.cs" />
     <Compile Include="AST\CompositeLiteral.cs" />
+    <Compile Include="AST\ConditionClause.cs" />
     <Compile Include="AST\ConstDeclaration.cs" />
+    <Compile Include="AST\Conversion.cs" />
     <Compile Include="AST\DefaultCase.cs" />
     <Compile Include="AST\Expression.cs" />
     <Compile Include="AST\ExpressionList.cs" />
@@ -72,7 +74,9 @@
     <Compile Include="AST\ExpressionSwitchClause.cs" />
     <Compile Include="AST\ExpressionType.cs" />
     <Compile Include="AST\ExpressionWrapper.cs" />
+    <Compile Include="AST\FallthroughStatement.cs" />
     <Compile Include="AST\FloatLiteral.cs" />
+    <Compile Include="AST\ForStatement.cs" />
     <Compile Include="AST\Function.cs" />
     <Compile Include="AST\GotoStatement.cs" />
     <Compile Include="AST\IdentifierExpression.cs" />
@@ -81,10 +85,13 @@
     <Compile Include="AST\IlBlock.cs" />
     <Compile Include="AST\ImaginaryLiteral.cs" />
     <Compile Include="AST\ImportDeclaration.cs" />
+    <Compile Include="AST\IncDecStatement.cs" />
     <Compile Include="AST\IndeterminateArrayType.cs" />
     <Compile Include="AST\IndexExpression.cs" />
     <Compile Include="AST\IntegerLiteral.cs" />
     <Compile Include="AST\InvocationExpression.cs" />
+    <Compile Include="AST\IterativeClause.cs" />
+    <Compile Include="AST\IteratorType.cs" />
     <Compile Include="AST\KeyedElement.cs" />
     <Compile Include="AST\KeyedElementList.cs" />
     <Compile Include="AST\LabeledStatement.cs" />
@@ -96,6 +103,8 @@
     <Compile Include="AST\Parameters.cs" />
     <Compile Include="AST\ParameterVariable.cs" />
     <Compile Include="AST\PointerType.cs" />
+    <Compile Include="AST\QualifiedIdentifier.cs" />
+    <Compile Include="AST\RangeClause.cs" />
     <Compile Include="AST\RangeType.cs" />
     <Compile Include="AST\RawNode.cs" />
     <Compile Include="AST\ReturnAssignment.cs" />
@@ -104,6 +113,7 @@
     <Compile Include="AST\Root.cs" />
     <Compile Include="AST\RuneLiteral.cs" />
     <Compile Include="AST\Scope.cs" />
+    <Compile Include="AST\SelectorExpression.cs" />
     <Compile Include="AST\Signature.cs" />
     <Compile Include="AST\Statement.cs" />
     <Compile Include="AST\StatementList.cs" />

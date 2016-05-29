@@ -106,7 +106,7 @@ method_expr : receiver_type Dot Identifier ;
 receiver_type : type_name | OpenParen StarOperator type_name CloseParen | OpenParen receiver_type CloseParen ;
 
 expression : unary_expr | expression binary_op expression ;
-unary_expr : primary_expr | unary_op unary_expr ;
+unary_expr : unary_op unary_expr | primary_expr;
 
 conversion : type OpenParen expression Comma? CloseParen ;
 
