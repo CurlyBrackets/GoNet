@@ -22,5 +22,7 @@ namespace GoNet.AST
 
         protected Expression(bool container, int index = 0)
             : base(true, index+1) { }
+
+        public abstract Expression Clone();
     }
 }

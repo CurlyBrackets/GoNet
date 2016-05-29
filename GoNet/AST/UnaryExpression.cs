@@ -40,5 +40,10 @@ namespace GoNet.AST
             Expr = expr;
             Op = op;
         }
+
+        public override Expression Clone()
+        {
+            return new UnaryExpression(Op, Expr.Clone());
+        }
     }
 }

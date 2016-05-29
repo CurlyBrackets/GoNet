@@ -55,23 +55,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AstBuilder.cs" />
+    <Compile Include="AstPrinter.cs" />
     <Compile Include="AstResolver.cs" />
+    <Compile Include="AST\Assignment.cs" />
     <Compile Include="AST\Base.cs" />
     <Compile Include="AST\BinaryExpression.cs" />
     <Compile Include="AST\Block.cs" />
     <Compile Include="AST\BuiltinType.cs" />
+    <Compile Include="AST\CompositeLiteral.cs" />
     <Compile Include="AST\ConstDeclaration.cs" />
+    <Compile Include="AST\DefaultCase.cs" />
     <Compile Include="AST\Expression.cs" />
     <Compile Include="AST\ExpressionList.cs" />
+    <Compile Include="AST\ExpressionSwitch.cs" />
+    <Compile Include="AST\ExpressionSwitchClause.cs" />
+    <Compile Include="AST\ExpressionType.cs" />
+    <Compile Include="AST\ExpressionWrapper.cs" />
     <Compile Include="AST\FloatLiteral.cs" />
     <Compile Include="AST\Function.cs" />
+    <Compile Include="AST\GotoStatement.cs" />
     <Compile Include="AST\IdentifierExpression.cs" />
     <Compile Include="AST\IdentifierList.cs" />
     <Compile Include="AST\IfStatement.cs" />
     <Compile Include="AST\IlBlock.cs" />
     <Compile Include="AST\ImaginaryLiteral.cs" />
     <Compile Include="AST\ImportDeclaration.cs" />
+    <Compile Include="AST\IndexExpression.cs" />
     <Compile Include="AST\IntegerLiteral.cs" />
+    <Compile Include="AST\InvocationExpression.cs" />
+    <Compile Include="AST\KeyedElement.cs" />
+    <Compile Include="AST\LabeledStatement.cs" />
     <Compile Include="AST\LocalVariable.cs" />
     <Compile Include="AST\Node.cs" />
     <Compile Include="AST\Operations.cs" />
@@ -82,6 +95,7 @@
     <Compile Include="AST\PointerType.cs" />
     <Compile Include="AST\RangeType.cs" />
     <Compile Include="AST\RawNode.cs" />
+    <Compile Include="AST\ReturnAssignment.cs" />
     <Compile Include="AST\ReturnStatement.cs" />
     <Compile Include="AST\ReturnVariable.cs" />
     <Compile Include="AST\Root.cs" />

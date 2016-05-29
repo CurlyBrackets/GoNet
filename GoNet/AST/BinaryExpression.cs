@@ -15,7 +15,7 @@ namespace GoNet.AST
             {
                 return GetChild<Expression>(1);
             }
-            private set
+            set
             {
                 SetChild(value, 1);
             }
@@ -27,7 +27,7 @@ namespace GoNet.AST
             {
                 return GetChild<Expression>(2);
             }
-            private set
+            set
             {
                 SetChild(value, 2);
             }
@@ -39,6 +39,14 @@ namespace GoNet.AST
             Operation = op;
             Left = left;
             Right = right;
+        }
+
+        public override Expression Clone()
+        {
+            return new BinaryExpression(
+                Operation,
+                Left.Clone(),
+                Right.Clone());
         }
     }
 }

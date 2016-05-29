@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class StringLiteral : Expression
+    class CompositeLiteral : Expression
     {
-        public string Value { get; private set; }
-        public StringLiteral(string value)
-            : base(false)
+        public CompositeLiteral()
+            : base(true, 2)
         {
-            Value = value;
+
         }
 
         public override Expression Clone()
         {
-            return new StringLiteral(Value);
+            throw new NotImplementedException();
         }
     }
 }

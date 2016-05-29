@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    abstract class Scope : Node
+    interface IScope
+    {
+        void AddConstDeclaration(ConstDeclaration cd);
+        void AddTypeDeclaration(TypeDeclaration td);
+        void AddVarDeclaration(VarDeclaration vd);
+        ConstDeclaration GetConstDeclaration(int index);
+        TypeDeclaration GetTypeDeclaration(int index);
+        VarDeclaration GetVarDeclaration(int index);
+        int NumConstDeclarations();
+        int NumTypeDeclarations();
+        int NumVarDeclarations();
+    }
+
+    class Scope : Node, IScope
     {
         private List<int> m_constDeclarations, m_typeDeclarations, m_varDeclarations;
 
-        protected Scope(int startIndex)
+        public Scope(int startIndex)
             : base(true)
         {
             for (int i = 0; i < startIndex; i++)

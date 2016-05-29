@@ -39,7 +39,7 @@ namespace GoNet
             m_doingReturns = false;
         }
 
-        public void Finalize()
+        public void Save()
         {
             m_ab.Save(m_filename);
         }

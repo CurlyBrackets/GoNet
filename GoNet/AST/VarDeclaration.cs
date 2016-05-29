@@ -9,23 +9,17 @@ namespace GoNet.AST
     class VarDeclaration : Node
     {
         public string Identifier { get; private set; }
-        public Expression Value
+        public Type Type
         {
-            get
-            {
-                return GetChild<Expression>(0);
-            }
-            private set
-            {
-                SetChild(value, 0);
-            }
+            get { return GetChild<Type>(0); }
+            set { SetChild(value, 0); }
         }
 
-        public VarDeclaration(string id, Expression value)
+        public VarDeclaration(string id, Type t)
             : base(true, 1)
         {
             Identifier = id;
-            Value = value;
+            Type = t;
         }
     }
 }

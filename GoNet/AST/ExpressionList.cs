@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ExpressionList : Base
+    class ExpressionList : Node
     {
-        public List<Expression> Items { get; private set; }
         public ExpressionList()
+            : base(true)
         {
-            Items = new List<Expression>();
+            
         }
     }
 }

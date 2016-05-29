@@ -14,5 +14,10 @@ namespace GoNet.AST
         {
             Identifier = id;
         }
+
+        public override Expression Clone()
+        {
+            return new IdentifierExpression(Identifier);
+        }
     }
 }

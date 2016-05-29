@@ -16,5 +16,10 @@ namespace GoNet.AST
             Slot = slot;
             Reference = reference;
         }
+
+        public override Expression Clone()
+        {
+            return new ParameterVariable(Slot, Reference);
+        }
     }
 }

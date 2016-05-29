@@ -33,9 +33,24 @@ namespace GoNet.Utils
             var numerator = BigInteger.Parse(baseString);
 
             if (!string.IsNullOrEmpty(exponentString))
-                numerator *= BigInteger.Pow(10, int.Parse(exponentString));
-
+            {
+                int exponent = int.Parse(exponentString);
+                if(exponent > 0)
+                    numerator *= BigInteger.Pow(10, exponent);
+                else if(exponent == 0)
+                {
+                    numerator = 1;
+                    denominator = 1;
+                }
+                else
+                    denominator *= BigInteger.Pow(10, -exponent);
+            }
             return new BigRational(numerator, denominator);
+        }
+
+        public static string ToDecimalString(this BigRational br)
+        {
+            return ((double)br).ToString();
         }
     }
 }

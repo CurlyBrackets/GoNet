@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class StatementList : Node
+    class DefaultCase : Node
     {
-        public StatementList()
-            : base(true)
+        public DefaultCase()
+            : base(false)
         {
+
         }
     }
 }

@@ -106,9 +106,9 @@ namespace GoNet
             var root = new AST.Root();
             var builder = new AstBuilder(root);
 
-            int count = 1;
+            int count = 18;
 
-            foreach(var file in Directory.EnumerateFiles(dir, "*.go"))
+            foreach(var file in Directory.EnumerateFiles(dir, "gamma.go"))
             {
                 // parse each file
                 var basename = Path.GetFileNameWithoutExtension(file);
@@ -141,14 +141,16 @@ namespace GoNet
             var translator = new Translator();
             var compiler = new Compiler(name, true);
 
+            new AstPrinter().Process(root);
+
             // constant subsitution
-            resolver.Process(root);
+            /*resolver.Process(root);
             typeChecker.Process(root);
             translator.Process(root);
-            compiler.Process(root);
+            compiler.Process(root);*/
 
             //Console.WriteLine(root.Packages.First().Value.Imports.Count);
-            compiler.Finalize();
+            //compiler.Finalize();
             return false;
         }
 
@@ -175,8 +177,7 @@ namespace GoNet
         static void Main(string[] args)
         {
             //StandAloneTest("(padding[0:m])");
-            //StandAloneTest("f.buf.Write(padding[0:m])");
-            Console.WriteLine(Utils.BigRationalExtensions.Parse("100.125e2"));
+            //StandAloneTest("return sign >= 0 && f > MaxFloat64 || sign <= 0 && f < -MaxFloat64");
 
             BuildLibrary("math");
         }

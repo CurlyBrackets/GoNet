@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class StatementList : Node
+    class KeyedElement : Node
     {
-        public StatementList()
-            : base(true)
+        public KeyedElement()
+            : base(true, 2)
         {
+
         }
     }
 }

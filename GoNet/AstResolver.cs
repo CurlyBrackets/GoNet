@@ -35,8 +35,7 @@ namespace GoNet
             switch (input)
             {
                 case VarDeclaration vd:
-                    
-                    DefineVariable<LocalVariable>(vd.Identifier, false, null).Value = vd.Value;
+                    DefineVariable<LocalVariable>(vd.Identifier, false, null);
                     base.Process(input);
                     break;
                 case Signature s:

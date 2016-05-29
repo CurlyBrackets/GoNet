@@ -54,6 +54,8 @@ namespace GoNet.AST
                 throw new InvalidOperationException();
             if (m_limit != 0 && m_children.Count == m_limit)
                 throw new Exception($"Node cannot have more than {m_limit} children");
+            if (n == null)
+                throw new ArgumentNullException("n");
 
             if (n.Parent != null)
                 n.Parent.RemoveChild(n);

@@ -15,5 +15,10 @@ namespace GoNet.AST
         {
             Value = value;
         }
+
+        public override Expression Clone()
+        {
+            return new FloatLiteral(Value);
+        }
     }
 }

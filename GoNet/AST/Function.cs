@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class Function : Scope
+    class Function : Node
     {
         public bool IsExported {
             get
@@ -43,7 +43,7 @@ namespace GoNet.AST
         public bool IsExternal { get { return Body == null; } }
 
         public Function(string name, Type owner)
-            : base(2)
+            : base(true, 2)
         {
             Name = name;
             Owner = owner;

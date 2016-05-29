@@ -10,23 +10,17 @@ namespace GoNet.AST
     {
         public int Slot { get; private set; }
         public bool Reference { get; private set; }
-        public Expression Value
-        {
-            get
-            {
-                return GetChild<Expression>(1);
-            }
-            set
-            {
-                SetChild(value, 1);
-            }
-        }
 
         public LocalVariable(int slot, bool reference)
-            : base(true)
+            : base(false)
         {
             Slot = slot;
             Reference = reference;
+        }
+
+        public override Expression Clone()
+        {
+            return new LocalVariable(Slot, Reference);
         }
     }
 }
