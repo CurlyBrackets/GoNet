@@ -167,7 +167,7 @@ namespace GoNet
 
                 var nodeList = context.identifier_list().Accept(this) as RawNodeList;
                 foreach (var node in nodeList.Items)
-                    ret.AddChild(new Parameter(node.Text, type.Clone()));
+                    ret.AddChild(new Parameter(node.Text, type.CloneType()));
 
                 return ret;
             }
@@ -590,14 +590,25 @@ namespace GoNet
 
             if (identList.Items.Count > 1 && exprList.NumChildren() == 1 && exprList.GetChild(0) is InvocationExpression)
             {
+                var invoke = exprList.GetChild<InvocationExpression>(0);
                 var idents = new ExpressionList();
+
+                int index = 0;
                 foreach (var ident in identList.Items)
+                {
                     idents.AddChild(new IdentifierExpression(ident.Text));
+                    var vd = new VarDeclaration(ident.Text,
+                        new ReturnType(
+                            invoke,
+                            index++));
+                    m_currentScope.AddVarDeclaration(vd);
+                }
+
 
                 ret.AddChild(
                     new ReturnAssignment(
                         idents,
-                        exprList.GetChild<InvocationExpression>(0)));
+                        invoke));
             }
             else
             {
@@ -847,7 +858,7 @@ namespace GoNet
             {
                 VarDeclaration vd;
                 if(type != null)
-                    vd = new VarDeclaration(identList.Items[i].Text, type.Clone());
+                    vd = new VarDeclaration(identList.Items[i].Text, type.CloneType());
                 else //expr list should be defined here
                     vd = new VarDeclaration(identList.Items[i].Text, new ExpressionType(exprList.GetChild<Expression>(0)));
 

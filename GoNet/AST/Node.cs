@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,5 +138,14 @@ namespace GoNet.AST
         {
             return m_children.Where(n => n is T).Select(n => n as T);
         }
+
+        public override string ToString()
+        {
+            var sw = new StringWriter();
+            new AstPrinter(sw).Process(this);
+            return sw.ToString();
+        }
+
+        public abstract Node Clone();
     }
 }

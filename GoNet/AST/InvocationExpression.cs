@@ -8,11 +8,11 @@ namespace GoNet.AST
 {
     class InvocationExpression : Expression
     {
-        public Expression Subject
+        public Node Subject
         {
             get
             {
-                return GetChild<Expression>(2);
+                return GetChild<Node>(2);
             }
             private set
             {
@@ -37,7 +37,7 @@ namespace GoNet.AST
             get; private set;
         }
 
-        public InvocationExpression(Expression subj, ExpressionList args, bool variableLength)
+        public InvocationExpression(Node subj, ExpressionList args, bool variableLength)
             : base(true, 2)
         {
             Subject = subj;
@@ -45,14 +45,14 @@ namespace GoNet.AST
             VariableLength = variableLength;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             ExpressionList el = null;
             if(Arguments != null)
             {
                 el = new ExpressionList();
                 for (int i = 0; i < Arguments.NumChildren(); i++)
-                    el.AddChild(Arguments.GetChild<Expression>(i).Clone());
+                    el.AddChild(Arguments.GetChild<Expression>(i).CloneExpr());
             }
 
             return new InvocationExpression(

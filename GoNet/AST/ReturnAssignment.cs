@@ -26,5 +26,12 @@ namespace GoNet.AST
             Identifiers = el;
             Invocation = ie;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new ReturnAssignment(
+                Identifiers.Clone() as ExpressionList,
+                Invocation.CloneExpr() as InvocationExpression);
+        }
     }
 }

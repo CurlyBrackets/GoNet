@@ -14,5 +14,13 @@ namespace GoNet.IL
         {
 
         }
+
+        public override Node Clone()
+        {
+            var ret = new Instructions();
+            for (int i = 0; i < NumChildren(); i++)
+                ret.AddChild(GetChild(i)?.Clone());
+            return ret;
+        }
     }
 }

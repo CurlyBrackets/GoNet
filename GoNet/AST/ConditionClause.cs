@@ -19,5 +19,11 @@ namespace GoNet.AST
         {
             Expression = expr;
         }
+
+        public override Node Clone()
+        {
+            return new ConditionClause(
+                Expression.CloneExpr());
+        }
     }
 }

@@ -27,5 +27,12 @@ namespace GoNet.AST
             Identifier = identifier;
             Value = value;
         }
+
+        public override Node Clone()
+        {
+            return new ConstDeclaration(
+                Identifier,
+                Value.CloneExpr());
+        }
     }
 }

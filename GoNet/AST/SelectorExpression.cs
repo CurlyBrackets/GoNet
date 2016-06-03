@@ -23,10 +23,10 @@ namespace GoNet.AST
             Right = right;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new SelectorExpression(
-                Left.Clone(),
+                Left.CloneExpr(),
                 Right);
         }
     }

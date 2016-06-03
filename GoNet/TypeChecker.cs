@@ -12,6 +12,11 @@ namespace GoNet
         public override void Process(Node input)
         {
             switch (input) {
+                case Package p:
+                    if (p.Imported)
+                        return;
+                    base.Process(p);
+                    break;
                 case TypeName tn:
                     var t = BuiltinType.FromTypeName(tn.Name);
                     if(t != null)

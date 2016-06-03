@@ -15,19 +15,32 @@ namespace GoNet.AST
         }
 
         public int Length { get; private set; }
+        public bool AnyLength { get; private set; }
+
+        public ArrayType(Type elementType)
+            : base(true, 1)
+        {
+            ElementType = elementType;
+            AnyLength = true;
+            Length = 0;
+        }
 
         public ArrayType(Type elementType, int length)
             : base(true, 1)
         {
             ElementType = elementType;
             Length = length;
+            AnyLength = false;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
-            return new ArrayType(
-                ElementType.Clone(),
-                Length);
+            if (AnyLength)
+                return new ArrayType(ElementType.CloneType());
+            else
+                return new ArrayType(
+                    ElementType.CloneType(),
+                    Length);
         }
     }
 }

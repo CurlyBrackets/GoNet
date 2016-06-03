@@ -13,5 +13,10 @@ namespace GoNet.AST
         {
 
         }
+
+        public override Node Clone()
+        {
+            return new DefaultCase();
+        }
     }
 }

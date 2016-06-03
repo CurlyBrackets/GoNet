@@ -62,5 +62,16 @@ namespace GoNet.AST
             Condition = condition;
             True = t;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new IfStatement(
+                Condition.CloneExpr(),
+                True.Clone() as Block)
+            {
+                Preamble = Preamble?.CloneStatement(),
+                False = False?.CloneStatement()
+            };
+        }
     }
 }

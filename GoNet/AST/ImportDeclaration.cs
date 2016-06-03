@@ -30,5 +30,12 @@ namespace GoNet.AST
             Package = package;
             Alias = alias;
         }
+
+        public override Node Clone()
+        {
+            return new ImportDeclaration(
+                Package,
+                Alias);
+        }
     }
 }

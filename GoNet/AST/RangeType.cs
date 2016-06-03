@@ -15,9 +15,9 @@ namespace GoNet.AST
             BaseType = t;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
-            return new RangeType(BaseType.Clone());
+            return new RangeType(BaseType.CloneType());
         }
     }
 }

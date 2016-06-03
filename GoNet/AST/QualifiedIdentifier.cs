@@ -18,7 +18,7 @@ namespace GoNet.AST
             Identifier = id;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new QualifiedIdentifier(
                 Scope,

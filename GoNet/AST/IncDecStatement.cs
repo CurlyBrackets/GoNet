@@ -22,5 +22,12 @@ namespace GoNet.AST
             Expression = expr;
             Increment = increment;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new IncDecStatement(
+                Expression.CloneExpr(),
+                Increment);
+        }
     }
 }

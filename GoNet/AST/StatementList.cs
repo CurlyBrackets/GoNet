@@ -12,5 +12,15 @@ namespace GoNet.AST
             : base(true)
         {
         }
+
+        public override Node Clone()
+        {
+            var ret = new StatementList();
+
+            for (int i = 0; i < NumChildren(); i++)
+                ret.AddChild(GetChild(i)?.Clone());
+
+            return ret;
+        }
     }
 }

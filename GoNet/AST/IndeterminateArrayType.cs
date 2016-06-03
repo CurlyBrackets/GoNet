@@ -20,7 +20,7 @@ namespace GoNet.AST
             ElementType = elType;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
             throw new NotImplementedException();
         }

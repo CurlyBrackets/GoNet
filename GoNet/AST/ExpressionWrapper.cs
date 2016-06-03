@@ -20,9 +20,9 @@ namespace GoNet.AST
             Expr = expr;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
-            return new ExpressionWrapper(Expr.Clone());
+            return new ExpressionWrapper(Expr.CloneExpr());
         }
     }
 }

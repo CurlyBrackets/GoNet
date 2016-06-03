@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace GoNet.AST
 {
-    class ImaginaryLiteral : Base
+    class ImaginaryLiteral : Expression
     {
         public BigRational Value { get; private set; }
         public ImaginaryLiteral(BigRational value)
+            : base(false)
         {
             Value = value;
+        }
+
+        public override Expression CloneExpr()
+        {
+            return new ImaginaryLiteral(Value);
         }
     }
 }

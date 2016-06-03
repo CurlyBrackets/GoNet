@@ -28,9 +28,9 @@ namespace GoNet.AST
             Value = value;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
-            return new TypeDeclaration(Name, Value.Clone());
+            return new TypeDeclaration(Name, Value.CloneType());
         }
     }
 }

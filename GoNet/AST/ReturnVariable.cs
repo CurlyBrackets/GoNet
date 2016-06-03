@@ -15,7 +15,7 @@ namespace GoNet.AST
             Slot = slot;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new ReturnVariable(Slot, false);
         }

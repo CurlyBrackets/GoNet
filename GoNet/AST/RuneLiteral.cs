@@ -15,7 +15,7 @@ namespace GoNet.AST
             Value = value;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new RuneLiteral(Value);
         }

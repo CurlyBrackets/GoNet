@@ -14,5 +14,10 @@ namespace GoNet.AST
         {
             Label = label;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new GotoStatement(Label);
+        }
     }
 }

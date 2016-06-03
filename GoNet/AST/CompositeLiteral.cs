@@ -27,19 +27,19 @@ namespace GoNet.AST
             Elements = els;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             var newList = new KeyedElementList();
             foreach(var ke in Elements.FilteredChildren<KeyedElement>())
             {
                 newList.AddChild(
                     new KeyedElement(
-                        ke.Key == null ? null : ke.Key.Clone(),
-                        ke.Element.Clone()));
+                        ke.Key == null ? null : ke.Key.CloneExpr(),
+                        ke.Element.CloneExpr()));
             }
 
             return new CompositeLiteral(
-                Type.Clone(),
+                Type.CloneType(),
                 newList);
         }
     }

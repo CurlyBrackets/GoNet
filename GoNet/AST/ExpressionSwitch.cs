@@ -38,5 +38,17 @@ namespace GoNet.AST
             Preamble = null;
             Expression = null;
         }
+
+        public override Statement CloneStatement()
+        {
+            var ret = new ExpressionSwitch();
+            for (int i = 0; i < NumChildren(); i++)
+            {
+                var c = GetChild(i);
+                if(c != null)
+                    ret.AddChild(c.Clone());
+            }
+            return ret;
+        }
     }
 }

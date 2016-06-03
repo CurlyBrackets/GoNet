@@ -54,5 +54,16 @@ namespace GoNet.IL
         {
             BlockIndex = Interlocked.Increment(ref s_index);
         }
+
+        public override Node Clone()
+        {
+            return new BasicBlock()
+            {
+                TrueBranch = TrueBranch?.Clone() as BasicBlock,
+                FalseBranch = FalseBranch?.Clone() as BasicBlock,
+                TerminatingBlock = TerminatingBlock,
+                Instructions = Instructions?.Clone() as Instructions,
+            };
+        }
     }
 }

@@ -36,5 +36,14 @@ namespace GoNet.AST
         {
 
         }
+
+        public override Node Clone()
+        {
+            return new Signature()
+            {
+                Returns = Returns.Clone() as Parameters,
+                Parameters = Parameters.Clone() as Parameters,
+            };
+        }
     }
 }

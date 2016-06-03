@@ -26,9 +26,9 @@ namespace GoNet.AST
             ReferenceType = refType;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
-            return new PointerType(ReferenceType.Clone());
+            return new PointerType(ReferenceType.CloneType());
         }
     }
 }

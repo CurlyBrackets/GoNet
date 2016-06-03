@@ -65,5 +65,13 @@ namespace GoNet.AST
             Value = value;
             Operation = op;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new Assignment(
+                Identifier.CloneExpr(),
+                Value.CloneExpr(),
+                Operation);
+        }
     }
 }

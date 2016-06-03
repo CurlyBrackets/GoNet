@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.25302.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoNet", "GoNet\GoNet.csproj", "{4D5803E0-60EB-402E-9A4C-A984563FFB3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnsafeLibrary", "UnmanagedLibrary\UnsafeLibrary.csproj", "{443AA364-77FB-4804-AE87-8879F44BD263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLibrary", "CoreLibrary\CoreLibrary.csproj", "{D613CBDD-3737-4A44-A3D5-7F0997C0FF5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{4D5803E0-60EB-402E-9A4C-A984563FFB3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5803E0-60EB-402E-9A4C-A984563FFB3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D5803E0-60EB-402E-9A4C-A984563FFB3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443AA364-77FB-4804-AE87-8879F44BD263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443AA364-77FB-4804-AE87-8879F44BD263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443AA364-77FB-4804-AE87-8879F44BD263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443AA364-77FB-4804-AE87-8879F44BD263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D613CBDD-3737-4A44-A3D5-7F0997C0FF5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D613CBDD-3737-4A44-A3D5-7F0997C0FF5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D613CBDD-3737-4A44-A3D5-7F0997C0FF5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D613CBDD-3737-4A44-A3D5-7F0997C0FF5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

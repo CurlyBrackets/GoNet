@@ -23,10 +23,10 @@ namespace GoNet.AST
             Index = index;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
             return new IteratorType(
-                BaseType.Clone(),
+                BaseType.CloneType(),
                 Index);
         }
     }

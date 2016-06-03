@@ -13,5 +13,11 @@ namespace GoNet.AST
         {
 
         }
+
+        public abstract Statement CloneStatement();
+        public override Node Clone()
+        {
+            return CloneStatement();
+        }
     }
 }

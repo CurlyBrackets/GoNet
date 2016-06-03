@@ -13,6 +13,7 @@ namespace GoNet
     {
         private TextWriter m_o;
         private int m_indent;
+        private bool m_functionLeaf;
 
         public AstPrinter(TextWriter o = null)
         {
@@ -21,6 +22,7 @@ namespace GoNet
             else
                 m_o = o;
             m_indent = 0;
+            m_functionLeaf = false;
         }
 
         public override void Process(Node input)
@@ -28,6 +30,9 @@ namespace GoNet
             switch (input)
             {
                 case Package p:
+                    if (p.Imported)
+                        return;
+
                     PrintIndent();
                     m_o.WriteLine($"Package {p.Name}");
                     IncreaseIndent();
@@ -55,7 +60,7 @@ namespace GoNet
                         PrintIndent();
                         m_o.WriteLine("Exported");
                     }
-                    else
+                    else if(!m_functionLeaf)
                     {
                         PrintIndent();
                         m_o.WriteLine("Body:");
@@ -156,7 +161,9 @@ namespace GoNet
                         m_o.WriteLine("Variable length");
                     }
 
+                    m_functionLeaf = true;
                     NestedField("Subject", ie.Subject);
+                    m_functionLeaf = false;
                     NestedField("Arguments", ie.Arguments);
                     DecreaseIndent();
                     break;
@@ -227,8 +234,16 @@ namespace GoNet
                     PrintIndent();
                     m_o.WriteLine("ArrayType:");
                     IncreaseIndent();
-                    PrintIndent();
-                    m_o.WriteLine($"Length {at.Length}");
+                    if (at.AnyLength)
+                    {
+                        PrintIndent();
+                        m_o.WriteLine("Any length");
+                    }
+                    else
+                    {
+                        PrintIndent();
+                        m_o.WriteLine($"Length {at.Length}");
+                    }
                     NestedField("Element type", at.ElementType);
                     DecreaseIndent();
                     break;
@@ -344,6 +359,56 @@ namespace GoNet
                         m_o.WriteLine($"Alias: {id.Alias}");
                     }
                     DecreaseIndent();
+                    break;
+                case AnyType t:
+                    PrintIndent();
+                    m_o.WriteLine("Any type");
+                    break;
+                case SliceType st:
+                    PrintIndent();
+                    m_o.WriteLine("Slice type");
+                    IncreaseIndent();
+                    NestedField("Element type", st.ElementType);
+                    DecreaseIndent();
+                    break;
+                case MapType mt:
+                    PrintIndent();
+                    m_o.WriteLine("Map type");
+                    IncreaseIndent();
+                    NestedField("Key type", mt.KeyType);
+                    NestedField("Value type", mt.ValueType);
+                    DecreaseIndent();
+                    break;
+                case ChannelType ct:
+                    PrintIndent();
+                    m_o.WriteLine("Channel type");
+                    IncreaseIndent();
+                    NestedField("Element type", ct.ElementType);
+                    DecreaseIndent();
+                    break;
+                case BuiltinType bt:
+                    PrintIndent();
+                    m_o.WriteLine($"Builtin type {bt.Type}");
+                    break;
+                case RealType rt:
+                    PrintIndent();
+                    m_o.WriteLine($"Real type {rt.Type}");
+                    break;
+                case ParameterVariable pv:
+                    PrintIndent();
+                    m_o.WriteLine($"Parameter variable: {(pv.Reference ? "&" : "")}{pv.Slot}");
+                    break;
+                case LocalVariable lv:
+                    PrintIndent();
+                    m_o.WriteLine($"Local variable: {(lv.Reference ? "&" : "")}{lv.Slot}");
+                    break;
+                case ReturnVariable rv:
+                    PrintIndent();
+                    m_o.WriteLine($"Return variable: {rv.Slot}");
+                    break;
+                case BooleanLiteral bl:
+                    PrintIndent();
+                    m_o.WriteLine($"Boolean literal: {bl.IsTrue}");
                     break;
                 default:
                     base.Process(input);

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Antlr4.Runtime.Misc;
 using CommandLine;
+using System.Reflection;
+using CoreLibrary;
 
 namespace GoNet
 {
@@ -89,18 +91,46 @@ namespace GoNet
 
     class Program
     {
-        private const string StandardLibraryLocation = "StandardLibrary";
+        private const string StandardLibraryDir = "StandardLibrary";
+        private const string CacheDir = "cache";
 
         private static bool IsInteralLibrary(string name)
         {
             return name == "unsafe";
         }
+
+        private static void LoadAssembly(string name, string path, AST.Root root)
+        {
+            var asm = Assembly.LoadFile(path);
+            var type = asm.GetType(name);
+            var attr = type.GetCustomAttributes(typeof(CoreLibrary.TypeAliasAttribute));
+
+            var package = root.GetPackage(name, true);
+            foreach(var rawA in attr)
+            {
+                var a = rawA as TypeAliasAttribute;
+                package.AddTypeDeclaration(
+                    new AST.TypeDeclaration(
+                        a.TypeName,
+                        new AST.RealType(a.Type)));
+            }
+        }
+
+        private static void LoadImport(string name, AST.Root root)
+        {
+            var filename = Path.Combine(Environment.CurrentDirectory, CacheDir, name + ".dll");
+            if (File.Exists(filename))
+                LoadAssembly(name, filename, root);
+            else if (BuildLibrary(name))
+                LoadAssembly(name, filename, root);            
+        }
+
         private static bool BuildLibrary(string name)
         {
             if (IsInteralLibrary(name))
                 throw new NotImplementedException();
 
-            var dir = Path.Combine(Environment.CurrentDirectory, StandardLibraryLocation, name);
+            var dir = Path.Combine(Environment.CurrentDirectory, StandardLibraryDir, name);
 
             // create ast root
             var root = new AST.Root();
@@ -136,16 +166,35 @@ namespace GoNet
                 }
             }
 
+            var tempGatherer = new NodeGatherer<AST.ImportDeclaration>();
+            tempGatherer.Process(root);
+            var imports = tempGatherer.Results;
+
+            var imported = new HashSet<string>();
+            foreach(var i in imports)
+            {
+                if (imported.Contains(i.Package))
+                    continue;
+
+                imported.Add(i.Package);
+                LoadImport(i.Package, root);
+            }
+
+            var conversionProcessor = new ConversionProcessor();
+            var constantEvaluator = new ConstantEvaluator();
             var resolver = new AstResolver();
             var typeChecker = new TypeChecker();
             var translator = new Translator();
             var compiler = new Compiler(name, true);
 
-            new AstPrinter().Process(root);
+            //new AstPrinter().Process(root);
 
-            // constant subsitution
-            /*resolver.Process(root);
-            typeChecker.Process(root);
+            conversionProcessor.Process(root);
+            constantEvaluator.Process(root);
+            resolver.Process(root);
+            new AstPrinter(new StreamWriter("log.txt")).Process(root);
+
+            /*typeChecker.Process(root);
             translator.Process(root);
             compiler.Process(root);*/
 
@@ -176,7 +225,7 @@ namespace GoNet
 
         static void Main(string[] args)
         {
-            //StandAloneTest("(padding[0:m])");
+            //StandAloneTest("true");
             //StandAloneTest("return *(*uint32)(unsafe.Pointer(&f))");
 
             BuildLibrary("math");

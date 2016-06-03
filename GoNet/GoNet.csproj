@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;__DEMO__,__DEMO_EXPERIMENTAL__</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,7 +30,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -62,11 +62,18 @@
     <Compile Include="AST\Base.cs" />
     <Compile Include="AST\BinaryExpression.cs" />
     <Compile Include="AST\Block.cs" />
+    <Compile Include="AST\BooleanLiteral.cs" />
     <Compile Include="AST\BuiltinType.cs" />
+    <Compile Include="AST\ChannelType.cs" />
     <Compile Include="AST\CompositeLiteral.cs" />
     <Compile Include="AST\ConditionClause.cs" />
     <Compile Include="AST\ConstDeclaration.cs" />
     <Compile Include="AST\Conversion.cs" />
+    <Compile Include="AST\OverloadedFunction.cs" />
+    <Compile Include="AST\RealType.cs" />
+    <Compile Include="AST\ReturnType.cs" />
+    <Compile Include="AST\SliceType.cs" />
+    <Compile Include="ConversionProcessor.cs" />
     <Compile Include="AST\DefaultCase.cs" />
     <Compile Include="AST\Expression.cs" />
     <Compile Include="AST\ExpressionList.cs" />
@@ -128,15 +135,19 @@
     <Compile Include="AstProcessor.cs" />
     <Compile Include="AST\Variable.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="ConstantEvaluator.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="IL\BasicBlock.cs" />
     <Compile Include="IL\Instruction.cs" />
     <Compile Include="IL\Instructions.cs" />
+    <Compile Include="AST\MapType.cs" />
+    <Compile Include="NodeGatherer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translator.cs" />
     <Compile Include="TypeChecker.cs" />
     <Compile Include="Utils\BigRationalExtensions.cs" />
+    <Compile Include="Utils\BinnedDictionary.cs" />
     <Compile Include="Utils\LookupList.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +158,16 @@
       <CustomToolNamespace>GoNet.Parser</CustomToolNamespace>
     </Antlr4>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CoreLibrary\CoreLibrary.csproj">
+      <Project>{d613cbdd-3737-4a44-a3d5-7f0997c0ff5f}</Project>
+      <Name>CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UnmanagedLibrary\UnsafeLibrary.csproj">
+      <Project>{443aa364-77fb-4804-ae87-8879f44bd263}</Project>
+      <Name>UnsafeLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

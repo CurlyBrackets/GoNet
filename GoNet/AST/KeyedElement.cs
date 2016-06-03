@@ -26,5 +26,12 @@ namespace GoNet.AST
             Key = key;
             Element = element;
         }
+
+        public override Node Clone()
+        {
+            return new KeyedElement(
+                Key.CloneExpr(),
+                Element.CloneExpr());
+        }
     }
 }

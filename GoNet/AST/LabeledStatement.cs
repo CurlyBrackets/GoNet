@@ -21,5 +21,12 @@ namespace GoNet.AST
             Label = label;
             Statement = s;
         }
+
+        public override Statement CloneStatement()
+        {
+            return new LabeledStatement(
+                Label,
+                Statement.CloneStatement());
+        }
     }
 }

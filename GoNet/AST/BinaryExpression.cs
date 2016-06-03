@@ -41,12 +41,12 @@ namespace GoNet.AST
             Right = right;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new BinaryExpression(
                 Operation,
-                Left.Clone(),
-                Right.Clone());
+                Left.CloneExpr(),
+                Right.CloneExpr());
         }
     }
 }

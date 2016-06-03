@@ -27,6 +27,8 @@ namespace GoNet.AST
         Complex128,
 
         Uintptr,
+        String,
+        Bool = Int8,
 
         Byte = Uint8,
         Rune = Int32,
@@ -48,14 +50,22 @@ namespace GoNet.AST
                 Parts.Add(val.ToLower(), new BuiltinType((EBuiltinType)Enum.Parse(typeof(EBuiltinType), val)));
         }
 
-        public static BuiltinType FromTypeName(string name)
+        public static IEnumerable<string> Names
+        {
+            get
+            {
+                return Parts.Keys;
+            }
+        }
+
+        public static Type FromTypeName(string name)
         {
             if (Parts.ContainsKey(name))
-                return Parts[name];
+                return Parts[name].CloneType();
             return null;
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
             return new BuiltinType(Type);
         }

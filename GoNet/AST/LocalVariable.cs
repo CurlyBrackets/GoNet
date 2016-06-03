@@ -18,7 +18,7 @@ namespace GoNet.AST
             Reference = reference;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new LocalVariable(Slot, Reference);
         }

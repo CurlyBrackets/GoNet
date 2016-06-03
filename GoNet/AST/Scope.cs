@@ -81,5 +81,19 @@ namespace GoNet.AST
         {
             return m_varDeclarations.Count;
         }
+
+        public override Node Clone()
+        {
+            var ret = new Scope(0);
+
+            for (int i = 0; i < NumConstDeclarations(); i++)
+                ret.AddConstDeclaration(GetConstDeclaration(i).Clone() as ConstDeclaration);
+            for (int i = 0; i < NumTypeDeclarations(); i++)
+                ret.AddTypeDeclaration(GetTypeDeclaration(i).Clone() as TypeDeclaration);
+            for (int i = 0; i < NumVarDeclarations(); i++)
+                ret.AddVarDeclaration(GetVarDeclaration(i).Clone() as VarDeclaration);
+
+            return ret;
+        }
     }
 }

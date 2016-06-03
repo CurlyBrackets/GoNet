@@ -33,5 +33,13 @@ namespace GoNet.AST
             Condition = condition;
             Afterword = afterword;
         }
+
+        public override Node Clone()
+        {
+            return new IterativeClause(
+                Preamble?.Clone() as StatementList,
+                Condition?.CloneExpr(),
+                Afterword?.CloneStatement());
+        }
     }
 }

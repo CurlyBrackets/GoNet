@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using GoNet.AST;
 
 namespace GoNet.IL
@@ -252,6 +253,14 @@ namespace GoNet.IL
         public object Argument
         {
             get; set;
+        }
+
+        public override Node Clone()
+        {
+            return new Instruction(Type)
+            {
+                Argument = Argument
+            };
         }
     }
 }

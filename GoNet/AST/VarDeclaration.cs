@@ -21,5 +21,12 @@ namespace GoNet.AST
             Identifier = id;
             Type = t;
         }
+
+        public override Node Clone()
+        {
+            return new VarDeclaration(
+                Identifier,
+                Type.CloneType());
+        }
     }
 }

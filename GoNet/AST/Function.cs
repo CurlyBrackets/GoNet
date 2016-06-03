@@ -48,5 +48,16 @@ namespace GoNet.AST
             Name = name;
             Owner = owner;
         }
+
+        public override Node Clone()
+        {
+            return new Function(
+                Name,
+                Owner?.CloneType())
+            {
+                Signature = Signature.Clone() as Signature,
+                Body = Body != null ? Body.Clone() : null,
+            };
+        }
     }
 }

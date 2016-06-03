@@ -27,11 +27,11 @@ namespace GoNet.AST
             From = from;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new ConversionExpression(
-                To.Clone(),
-                From.Clone());
+                To.CloneType(),
+                From.CloneExpr());
         }
     }
 }

@@ -27,11 +27,11 @@ namespace GoNet.AST
             Index = index;
         }
 
-        public override Expression Clone()
+        public override Expression CloneExpr()
         {
             return new IndexExpression(
-                Target.Clone(),
-                Index.Clone());
+                Target.CloneExpr(),
+                Index.CloneExpr());
         }
     }
 }

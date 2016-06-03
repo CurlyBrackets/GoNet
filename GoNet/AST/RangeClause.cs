@@ -26,5 +26,12 @@ namespace GoNet.AST
             Iterator = iterator;
             Values = values;
         }
+
+        public override Node Clone()
+        {
+            return new RangeClause(
+                Values.Clone() as ExpressionList,
+                Iterator.CloneExpr());
+        }
     }
 }

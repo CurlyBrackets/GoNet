@@ -16,15 +16,22 @@ namespace GoNet.AST
             m_packages = new Dictionary<string, int>();
         }
 
-        public Package GetPackage(string name)
+        public Package GetPackage(string name, bool imported = false)
         {
             if (m_packages.ContainsKey(name))
                 return GetChild<Package>(m_packages[name]);
 
-            var package = new Package(name);
+            var package = new Package(name, imported);
             AddChild(package);
             m_packages.Add(name, NumChildren() - 1);
             return package;
+        }
+
+        public override Node Clone()
+        {
+            var ret = new Root();
+            
+            return ret;
         }
     }
 }

@@ -17,12 +17,12 @@ namespace GoNet.AST
         public ExpressionType(Expression expr)
             : base(true, 1)
         {
-            Expr = expr.Clone();
+            Expr = expr.CloneExpr();
         }
 
-        public override Type Clone()
+        public override Type CloneType()
         {
-            return new ExpressionType(Expr.Clone());
+            return new ExpressionType(Expr.CloneExpr());
         }
     }
 }

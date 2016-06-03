@@ -10,20 +10,20 @@ namespace GoNet.AST
     {
         private Scope m_scope
         {
-            get { return GetChild<Scope>(2); }
-            set { SetChild(value, 2); }
+            get { return GetChild<Scope>(0); }
+            set { SetChild(value, 0); }
         }
 
         public Node Clause
         {
-            get { return GetChild(0); }
-            set { SetChild(value, 0); }
+            get { return GetChild(1); }
+            set { SetChild(value, 1); }
         }
 
         public Block Body
         {
-            get { return GetChild<Block>(1); }
-            set { SetChild(value, 1); }
+            get { return GetChild<Block>(2); }
+            set { SetChild(value, 2); }
         }
 
         public ForStatement()
@@ -75,6 +75,23 @@ namespace GoNet.AST
         public int NumVarDeclarations()
         {
             return m_scope.NumVarDeclarations();
+        }
+
+        public override Statement CloneStatement()
+        {
+            var ret = new ForStatement();
+
+            for (int i = 0; i < NumConstDeclarations(); i++)
+                ret.AddConstDeclaration(GetConstDeclaration(i).Clone() as ConstDeclaration);
+            for (int i = 0; i < NumTypeDeclarations(); i++)
+                ret.AddTypeDeclaration(GetTypeDeclaration(i).Clone() as TypeDeclaration);
+            for (int i = 0; i < NumVarDeclarations(); i++)
+                ret.AddVarDeclaration(GetVarDeclaration(i).Clone() as VarDeclaration);
+
+            ret.Clause = Clause.Clone();
+            ret.Body = Body.Clone() as Block;
+
+            return ret;
         }
     }
 }

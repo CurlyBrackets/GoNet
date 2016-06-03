@@ -9,16 +9,18 @@ namespace GoNet.AST
     class Package : Scope
     {
         public string Name { get; private set; }
+        public bool Imported { get; private set; }
 
         private List<int> m_functions, m_imports, m_staticInitializers;
 
-        public Package(string name)
+        public Package(string name, bool imported = false)
             : base(0)
         {
             Name = name;
             m_functions = new List<int>();
             m_imports = new List<int>();
             m_staticInitializers = new List<int>();
+            Imported = imported;
         }
 
         public void AddFunctionDeclaration(Function f)

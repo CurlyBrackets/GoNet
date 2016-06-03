@@ -13,5 +13,10 @@ namespace GoNet.AST
         {
 
         }
+
+        public override Statement CloneStatement()
+        {
+            return new FallthroughStatement();
+        }
     }
 }

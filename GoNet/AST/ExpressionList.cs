@@ -13,5 +13,13 @@ namespace GoNet.AST
         {
             
         }
+
+        public override Node Clone()
+        {
+            var ret = new ExpressionList();
+            for (int i = 0; i < NumChildren(); i++)
+                ret.AddChild(GetChild(i)?.Clone());
+            return ret;
+        }
     }
 }
